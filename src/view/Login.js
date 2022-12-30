@@ -1,5 +1,7 @@
 import { Button, Form, Row, Col } from "react-bootstrap";
 import React, { useState } from "react";
+import { autenticarUsuario } from "../services/Peticiones";
+import { redirect } from "react-router-dom";
 
 export const Login = () => {
 
@@ -14,9 +16,18 @@ export const Login = () => {
         setContrasenia(e.target.value)
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log({usuario, contrasenia})
+        console.log({ usuario, contrasenia })
+
+        const res = await autenticarUsuario({ usuario, contrasenia }); // Param..
+
+        if (res) {
+            /// Redirect to menu usuario
+        }
+        else {
+            // Show mensaje
+        }
     }
 
     return (
@@ -36,8 +47,16 @@ export const Login = () => {
 
                     <Form.Group>
                         <Row>
+
                             <Button variant="success" as="input" type="submit" value="Iniciar Sesion" />
+
                         </Row>
+                    </Form.Group>
+
+                    <Form.Group as={Row} className="justify-content-center my-4 ">
+
+                        <Col className="align-self-center">
+                            <a href="/"> Registrarse </a></Col>
                     </Form.Group>
                 </Form>
             </Col>

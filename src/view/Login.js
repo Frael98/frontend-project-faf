@@ -45,13 +45,7 @@ export const Login = () => {
                         <Form.Label>Contraseña</Form.Label>
                     </Form.Floating>
 
-                    <Form.Group>
-                        <Row>
-
-                            <Button variant="success" as="input" type="submit" value="Iniciar Sesion" />
-
-                        </Row>
-                    </Form.Group>
+                    <Button variant="success" as="input" type="submit" value="Iniciar Sesion" />
 
                     <Form.Group as={Row} className="justify-content-center my-4 ">
 

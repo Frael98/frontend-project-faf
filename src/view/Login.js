@@ -1,11 +1,14 @@
 import { Button, Form, Row, Col } from "react-bootstrap";
-import React from "react";
+import React, { useState } from "react";
 
 export const Login = () => {
+
+    const [usuario, setUsuario] = useState('')
+    
     return (
 
         <Row className="my-4 justify-content-center">
-            <Col md='6'>
+            <Col md='4'>
                 <Form className="card card-body">
                     <Form.Floating className="mb-3">
                         <Form.Control placeholder="Usuario" ></Form.Control>

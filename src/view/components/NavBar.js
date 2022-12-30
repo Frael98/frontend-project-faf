@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 export const NavBar = () => {
 
     return (
-        <Navbar bg='dark' className='p-3'>
+        <Navbar bg='dark' variant="dark" className='p-3'>
             <Navbar.Brand> Federacion de Arbitros de Futbol</Navbar.Brand>
             <Nav>
                 <Nav.Item>

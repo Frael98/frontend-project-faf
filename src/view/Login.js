@@ -48,7 +48,6 @@ export const Login = () => {
                     <Button variant="success" as="input" type="submit" value="Iniciar Sesion" />
 
                     <Form.Group as={Row} className="justify-content-center my-4 ">
-
                         <Col className="align-self-center">
                             <a href="/"> Registrarse </a></Col>
                     </Form.Group>

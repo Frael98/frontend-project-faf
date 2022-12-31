@@ -5,7 +5,7 @@ import { Login } from "./view/Login";
 function App() {
   return (
     <div>
-      <NavBar></NavBar>
+      <NavBar logeado={false}></NavBar>
       <Login></Login>
     </div>
   );

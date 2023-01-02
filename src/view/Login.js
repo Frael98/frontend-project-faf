@@ -1,7 +1,7 @@
 import { Button, Form, Row, Col, Image } from "react-bootstrap";
 import React, { useState } from "react";
 import { autenticarUsuario } from "../services/Peticiones";
-import { Link, redirect } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 /**
@@ -9,6 +9,8 @@ import { Link, redirect } from "react-router-dom";
  * @returns Componente Login
  */
 export const Login = () => {
+
+    const navigate = useNavigate()
 
     const [usuario, setUsuario] = useState('')
     const [contrasenia, setContrasenia] = useState('');
@@ -25,13 +27,12 @@ export const Login = () => {
         e.preventDefault();
         console.log({ usuario, contrasenia })
 
-        const res = await autenticarUsuario({ usuario, contrasenia }); // Param..
-
-        if (res) {
-            /// Redirect to menu usuario
-        }
-        else {
-            // Show mensaje
+        try {
+            const res = await autenticarUsuario({ usuario, contrasenia }); // Param..
+            if (!res) return
+            navigate('/home')
+        } catch (error) {
+            console.log(error)
         }
     }
 

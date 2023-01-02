@@ -1,8 +1,13 @@
-import { Button, Form, Row, Col } from "react-bootstrap";
+import { Button, Form, Row, Col, Image } from "react-bootstrap";
 import React, { useState } from "react";
 import { autenticarUsuario } from "../services/Peticiones";
-import { redirect } from "react-router-dom";
+import { Link, redirect } from "react-router-dom";
 
+
+/**
+ * 
+ * @returns Componente Login
+ */
 export const Login = () => {
 
     const [usuario, setUsuario] = useState('')
@@ -31,28 +36,33 @@ export const Login = () => {
     }
 
     return (
+        <>
+            <Row className="my-4 justify-content-center">
+                <Col md='4'>
+                    <Form className="card card-body" onSubmit={handleSubmit} >
+                        <div className="card-title">
+                            <h4 className="text-center">Inicio Sesion</h4>
+                        </div>
+                        <Form.Floating className="mb-3">
+                            <Form.Control onChange={handleUsuario} placeholder="Usuario" autoFocus></Form.Control>
+                            <Form.Label>Usuario</Form.Label>
+                        </Form.Floating>
 
-        <Row className="my-4 justify-content-center">
-            <Col md='4'>
-                <Form className="card card-body" onSubmit={handleSubmit} >
-                    <Form.Floating className="mb-3">
-                        <Form.Control onChange={handleUsuario} placeholder="Usuario" ></Form.Control>
-                        <Form.Label>Usuario</Form.Label>
-                    </Form.Floating>
+                        <Form.Floating className="mb-3">
+                            <Form.Control onChange={handleContrasenia} placeholder="Contraseñ" type="password"></Form.Control>
+                            <Form.Label>Contraseña</Form.Label>
+                        </Form.Floating>
 
-                    <Form.Floating className="mb-3">
-                        <Form.Control onChange={handleContrasenia} placeholder="Contraseñ" type="password"></Form.Control>
-                        <Form.Label>Contraseña</Form.Label>
-                    </Form.Floating>
+                        <Button variant="success" as="input" type="submit" value="Iniciar Sesion" />
 
-                    <Button variant="success" as="input" type="submit" value="Iniciar Sesion" />
+                        <Form.Group as={Row} className="justify-content-center my-2">
+                            <Link to='/sign' className="mb-1 text-center">Registrarse</Link>
+                            <Link to='' className="mb-1 text-center">Olvide mi Contraseña</Link>
+                        </Form.Group>
 
-                    <Form.Group as={Row} className="justify-content-center my-4 ">
-                        <Col className="align-self-center">
-                            <a href="/"> Registrarse </a></Col>
-                    </Form.Group>
-                </Form>
-            </Col>
-        </Row >
+                    </Form>
+                </Col>
+            </Row >
+        </>
     )
 }

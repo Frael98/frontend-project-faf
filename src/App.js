@@ -1,13 +1,18 @@
+import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import { NavBar } from "./view/components/NavBar";
 import { Login } from "./view/Login";
+import { Signup } from "./view/Signup";
 
 function App() {
   return (
-    <div>
+    <>
       <NavBar logeado={false}></NavBar>
-      <Login></Login>
-    </div>
+      <Routes>
+        <Route path='/' element={<Login/>}></Route>
+        <Route path='/sign' element={<Signup/>}></Route>
+      </Routes>
+    </>
   );
 }
 

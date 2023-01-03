@@ -11,9 +11,10 @@ import { Notificaciones } from "./view/Notificaciones";
 
 function App() {
   const [logeado, setLogeado] = useState(false)
+  const [user, setUser] = useState('')
   return (
     <>
-      <UsuarioContexto.Provider value={{logeado, setLogeado}}>
+      <UsuarioContexto.Provider value={{logeado, setLogeado, user, setUser}}>
         <NavBar></NavBar>
         <Routes>
           <Route path='/' element={<Login />} />

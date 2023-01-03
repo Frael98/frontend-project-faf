@@ -10,7 +10,7 @@ import { UsuarioContexto } from "./UsuarioContexto";
  */
 export const Login = () => {
 
-    const { logeado, setLogeado} = useContext(UsuarioContexto);
+    const { logeado, setLogeado, setUser} = useContext(UsuarioContexto);
 
     const navigate = useNavigate()
 
@@ -29,9 +29,12 @@ export const Login = () => {
         e.preventDefault();
         console.log({ usuario, contrasenia })
 
+        if(usuario === '') return
+        
         try {
             /* const res = await autenticarUsuario({ usuario, contrasenia }); // Param..
             if (!res) return */
+            setUser(usuario)
             setLogeado(!logeado)
             navigate('/home')
         } catch (error) {
@@ -53,7 +56,7 @@ export const Login = () => {
                         </Form.Floating>
 
                         <Form.Floating className="mb-3">
-                            <Form.Control onChange={handleContrasenia} placeholder="Contraseñ" type="password"></Form.Control>
+                            <Form.Control onChange={handleContrasenia} placeholder="Contraseña" type="password" autoComplete="current-password"></Form.Control>
                             <Form.Label>Contraseña</Form.Label>
                         </Form.Floating>
 

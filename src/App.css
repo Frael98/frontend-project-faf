@@ -3,6 +3,6 @@
 }
 
 .contenedor {
-    width: auto;
+    width: "fit-content";
     height: 565px;
 }

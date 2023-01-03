@@ -1,14 +1,16 @@
-import { Button, Form, Row, Col, Image } from "react-bootstrap";
-import React, { useState } from "react";
+import { Button, Form, Row, Col } from "react-bootstrap";
+import React, { useContext, useState } from "react";
 import { autenticarUsuario } from "../services/Peticiones";
 import { Link, useNavigate } from "react-router-dom";
-
+import { UsuarioContexto } from "./UsuarioContexto";
 
 /**
  * 
  * @returns Componente Login
  */
 export const Login = () => {
+
+    const { logeado, setLogeado} = useContext(UsuarioContexto);
 
     const navigate = useNavigate()
 
@@ -28,8 +30,9 @@ export const Login = () => {
         console.log({ usuario, contrasenia })
 
         try {
-            const res = await autenticarUsuario({ usuario, contrasenia }); // Param..
-            if (!res) return
+            /* const res = await autenticarUsuario({ usuario, contrasenia }); // Param..
+            if (!res) return */
+            setLogeado(!logeado)
             navigate('/home')
         } catch (error) {
             console.log(error)

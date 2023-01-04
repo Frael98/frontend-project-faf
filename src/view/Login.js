@@ -51,7 +51,7 @@ export const Login = () => {
                             <h4 className="text-center">Inicio Sesion</h4>
                         </div>
                         <Form.Floating className="mb-3">
-                            <Form.Control onChange={handleUsuario} placeholder="Usuario" autoFocus></Form.Control>
+                            <Form.Control onChange={handleUsuario} placeholder="Usuario" autoFocus autoComplete="username"></Form.Control>
                             <Form.Label>Usuario</Form.Label>
                         </Form.Floating>
 
@@ -64,7 +64,7 @@ export const Login = () => {
 
                         <Form.Group as={Row} className="justify-content-center my-2">
                             <Link to='/sign' className="mb-1 text-center">Registrarse</Link>
-                            <Link to='' className="mb-1 text-center">Olvide mi Contraseña</Link>
+                            <Link to='/recuperar' className="mb-1 text-center">Olvide mi Contraseña</Link>
                         </Form.Group>
 
                     </Form>

@@ -8,6 +8,7 @@ import { Login } from "./view/Login";
 import { Signup } from "./view/Signup";
 import { Home } from "./view/Home";
 import { Notificaciones } from "./view/Notificaciones";
+import { RecuperarCuenta } from "./view/RecuperarCuenta";
 
 function App() {
   const [logeado, setLogeado] = useState(false)
@@ -21,6 +22,7 @@ function App() {
           <Route path='/sign' element={<Signup />} />
           <Route path='/home' element={<Home />} />
           <Route path='/notificaciones' element={<Notificaciones />} />
+          <Route path='/recuperar' element={<RecuperarCuenta/>}/>
 
           <Route path='*' element={<NotFound />} />
         </Routes>

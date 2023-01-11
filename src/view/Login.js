@@ -23,6 +23,12 @@ export const Login = () => {
         setContrasenia(e.target.value)
     }
 
+    /**
+     * 
+     * @param {event} e 
+     * @returns void
+     * Envia datos al REST y redirecciona al usuario -> Home
+     */
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log({ usuario, contrasenia })

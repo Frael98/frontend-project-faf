@@ -9,6 +9,7 @@ import { Signup } from "./view/Signup";
 import { Home } from "./view/Home";
 import { Notificaciones } from "./view/Notificaciones";
 import { RecuperarCuenta } from "./view/RecuperarCuenta";
+import { RegistroArbitro } from './view/secretaria/RegistroArbitro';
 
 function App() {
   const [logeado, setLogeado] = useState(false)
@@ -23,6 +24,7 @@ function App() {
           <Route path='/home' element={<Home />} />
           <Route path='/notificaciones' element={<Notificaciones />} />
           <Route path='/recuperar' element={<RecuperarCuenta/>}/>
+          <Route path='/registro-arbitro' element={<RegistroArbitro/>}></Route>
 
           <Route path='*' element={<NotFound />} />
         </Routes>

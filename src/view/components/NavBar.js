@@ -14,23 +14,28 @@ export const NavBar = () => {
     }
     return (
         <>
-            <Navbar bg='dark' variant="dark" className='p-3'>
-                <Container>
+            <Navbar bg='dark' variant="dark tabs" className='p-3' expand='lg'>
+                <Container fluid>
                     <Navbar.Brand> Federacion de Arbitros de Futbol</Navbar.Brand>
                     {logeado ?
                         <>
-                            <Nav>
-                                <NavLink as={Link} to="/home">
-                                    Inicio
-                                </NavLink>
-                                <NavLink as={Link} to='/notificaciones'>
-                                    Notificaciones
-                                </NavLink>
-                            </Nav>
-                            <Navbar.Collapse className="justify-content-end">
-                                <Nav>
-                                    <Navbar.Toggle />
-                                    <NavDropdown title={<Navbar.Text>
+                            <Navbar.Toggle aria-controls="navbarScroll" />
+                            <Navbar.Collapse id="navbarScroll1">
+                                <Nav
+                                    className="me-auto my-2 my-lg-0"
+                                    style={{ maxHeight: '100px' }}
+                                    navbarScroll>
+                                    <NavLink to="/home">
+                                        Inicio
+                                    </NavLink>
+                                    <NavLink as={Link} to='/notificaciones'>
+                                        Notificaciones
+                                    </NavLink>
+                                    <NavLink as={Link} to='/registro-arbitro'>
+                                        Registro Arbitros
+                                    </NavLink>
+
+                                    <NavDropdown className="align-self-end" title={<Navbar.Text>
                                         Usuario: <Link href="#login">{user}</Link>
                                     </Navbar.Text>} id="basic-nav-dropdown">
                                         <NavDropdown.Item >Editar Perfil</NavDropdown.Item>
@@ -41,7 +46,9 @@ export const NavBar = () => {
                                         </NavDropdown.Item>
                                     </NavDropdown>
                                 </Nav>
-                            </Navbar.Collapse></>
+                            </Navbar.Collapse>
+                            
+                        </>
                         : <></>
                     }
                 </Container>

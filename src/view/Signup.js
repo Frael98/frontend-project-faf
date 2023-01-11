@@ -50,7 +50,7 @@ export const Signup = () => {
                         {/* <Form.Label>Correo</Form.Label> */}
                     </Form.Group>
                     <Form.Group className="mb-2">
-                        <Form.Control onChange={(e) => {setCorreo(e.target.value)}} type="password" placeholder="Contraseña" maxLength={20} autoComplete="current-password"></Form.Control>
+                        <Form.Control onChange={(e) => {setContrasenia(e.target.value)}} type="password" placeholder="Contraseña" maxLength={20} autoComplete="current-password"></Form.Control>
                         {/* <Form.Label>Contraseña</Form.Label> */}
                     </Form.Group>
                     <div className="mb-2 text-center">

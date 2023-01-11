@@ -1,23 +1,52 @@
-import React from "react";
-import { Nav, Navbar, NavDropdown } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { Nav, Navbar, NavDropdown, Container, NavLink } from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
+import { UsuarioContexto } from "../UsuarioContexto";
 
-export const NavBar = ({logeado}) => {
-    //const logeado = props.logeado
+export const NavBar = () => {
+
+    const { logeado, setLogeado, user } = useContext(UsuarioContexto)
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        setLogeado(!logeado)
+        navigate("/")
+    }
     return (
-        <Navbar bg='dark' variant="dark" className='p-3'>
-            <Navbar.Brand> Federacion de Arbitros de Futbol</Navbar.Brand>
-            {logeado ?
-                <Nav>
-                    <Nav.Item>
-                        <Link className="nav-link" to='/' >Inicio</Link>
-                    </Nav.Item>
-                    <Nav.Item>
-                        <Link className="nav-link" to='/' >Inicio</Link>
-                    </Nav.Item>
-                </Nav>
-                : <></>
-            }
-        </Navbar>
+        <>
+            <Navbar bg='dark' variant="dark" className='p-3'>
+                <Container>
+                    <Navbar.Brand> Federacion de Arbitros de Futbol</Navbar.Brand>
+                    {logeado ?
+                        <>
+                            <Nav>
+                                <NavLink as={Link} to="/home">
+                                    Inicio
+                                </NavLink>
+                                <NavLink as={Link} to='/notificaciones'>
+                                    Notificaciones
+                                </NavLink>
+                            </Nav>
+                            <Navbar.Collapse className="justify-content-end">
+                                <Nav>
+                                    <Navbar.Toggle />
+                                    <NavDropdown title={<Navbar.Text>
+                                        Usuario: <Link href="#login">{user}</Link>
+                                    </Navbar.Text>} id="basic-nav-dropdown">
+                                        <NavDropdown.Item >Editar Perfil</NavDropdown.Item>
+                                        <NavDropdown.Item >Tema oscuro </NavDropdown.Item>
+                                        <NavDropdown.Divider />
+                                        <NavDropdown.Item onClick={handleLogout}>
+                                            Cerrar Sesion
+                                        </NavDropdown.Item>
+                                    </NavDropdown>
+                                </Nav>
+                            </Navbar.Collapse></>
+                        : <></>
+                    }
+                </Container>
+
+            </Navbar>
+        </>
     )
 }

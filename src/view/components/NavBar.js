@@ -31,10 +31,15 @@ export const NavBar = () => {
                                     <NavLink as={Link} to='/notificaciones'>
                                         Notificaciones
                                     </NavLink>
-                                    <NavLink as={Link} to='/registro-arbitro'>
-                                        Registro Arbitros
-                                    </NavLink>
-
+                                    
+                                    <NavDropdown title='Crear/Modificar' id="basic-nav-dropdown">
+                                        <NavDropdown.Item href='/registro-arbitro'>Crear/Modifcar Arbitros</NavDropdown.Item>
+                                        <NavDropdown.Item href='/registro-club'>Crear/Modificar Clubs </NavDropdown.Item>
+                                        <NavDropdown.Divider />
+                                        <NavDropdown.Item >
+                                           Crear/Modificar Fecha Calendario
+                                        </NavDropdown.Item>
+                                    </NavDropdown>
                                     <NavDropdown className="align-self-end" title={<Navbar.Text>
                                         Usuario: <Link href="#login">{user}</Link>
                                     </Navbar.Text>} id="basic-nav-dropdown">

@@ -10,7 +10,8 @@ import { UsuarioContexto } from "./UsuarioContexto";
  */
 export const Login = () => {
 
-    const { logeado, setLogeado, setUser} = useContext(UsuarioContexto);
+    const [validated, setValidated] = useState(false);
+    const { logeado, setLogeado, setUser } = useContext(UsuarioContexto);
 
     const navigate = useNavigate()
 
@@ -32,11 +33,17 @@ export const Login = () => {
      * Envia datos al REST y redirecciona al usuario -> Home
      */
     const handleSubmit = async (e) => {
-        e.preventDefault();
+        const form = e.currentTarget;
         console.log({ usuario, contrasenia })
 
-        if(usuario === '') return
-        
+        if (form.checkValidity() === false) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        setValidated(true)
+
+        if (usuario === '') return
+
         try {
             /* const res = await autenticarUsuario({ usuario, contrasenia }); // Param..
             if (!res) return */
@@ -52,18 +59,20 @@ export const Login = () => {
         <>
             <Row className="my-4 justify-content-center">
                 <Col md='4'>
-                    <Form className="card card-body" onSubmit={handleSubmit} >
+                    <Form noValidate validated={validated} className="card card-body" onSubmit={handleSubmit} >
                         <div className="card-title">
                             <h4 className="text-center">Inicio Sesion</h4>
                         </div>
-                        <Form.Floating className="mb-3">
-                            <Form.Control onChange={handleUsuario} placeholder="Usuario" autoFocus autoComplete="username"></Form.Control>
+                        <Form.Floating className="mb-3" >
+                            <Form.Control onChange={handleUsuario} placeholder="Usuario" autoFocus autoComplete="username" required></Form.Control>
                             <Form.Label>Usuario</Form.Label>
+                            <Form.Control.Feedback type="invalid">Por favor ingrese su usuario</Form.Control.Feedback>
                         </Form.Floating>
-
+                        
                         <Form.Floating className="mb-3">
-                            <Form.Control onChange={handleContrasenia} placeholder="Contraseña" type="password" autoComplete="current-password"></Form.Control>
+                            <Form.Control onChange={handleContrasenia} placeholder="Contraseña" type="password" autoComplete="current-password" required></Form.Control>
                             <Form.Label>Contraseña</Form.Label>
+                            <Form.Control.Feedback type="invalid">Por favor ingrese su contraseña</Form.Control.Feedback>
                         </Form.Floating>
 
                         <Button variant="success" as="input" type="submit" value="Iniciar Sesion" />

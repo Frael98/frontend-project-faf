@@ -11,6 +11,7 @@ import { Notificaciones } from "./view/Notificaciones";
 import { RecuperarCuenta } from "./view/RecuperarCuenta";
 import { RegistroArbitro } from './view/secretaria/RegistroArbitro';
 import { RegistroClub } from './view/secretaria/RegistroClub';
+import { RegistroSecretario } from './view/administrador/RegistroSecretario';
 
 function App() {
   const [logeado, setLogeado] = useState(false)
@@ -27,6 +28,8 @@ function App() {
           <Route path='/recuperar' element={<RecuperarCuenta/>}/>
           <Route path='/registro-arbitro' element={<RegistroArbitro/>}></Route>
           <Route path='/registro-club' element={<RegistroClub/>}/>
+          <Route path='/registro-secretario' element={<RegistroSecretario/>}/>
+
           <Route path='*' element={<NotFound />} />
         </Routes>
       </UsuarioContexto.Provider>

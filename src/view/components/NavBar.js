@@ -35,6 +35,7 @@ export const NavBar = () => {
                                     <NavDropdown title='Crear/Modificar' id="basic-nav-dropdown">
                                         <NavDropdown.Item href='/registro-arbitro'>Crear/Modifcar Arbitros</NavDropdown.Item>
                                         <NavDropdown.Item href='/registro-club'>Crear/Modificar Clubs </NavDropdown.Item>
+                                        <NavDropdown.Item href='/registro-secretario'>Crear/Modificar Clubs </NavDropdown.Item>
                                         <NavDropdown.Divider />
                                         <NavDropdown.Item >
                                            Crear/Modificar Fecha Calendario

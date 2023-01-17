@@ -25,23 +25,31 @@ export const NavBar = () => {
                                     className="me-auto my-2 my-lg-0"
                                     style={{ maxHeight: '100px' }}
                                     navbarScroll>
-                                    <NavLink to="/home">
+                                    <NavLink as={Link} to="/home">
                                         Inicio
                                     </NavLink>
-                                    <NavLink as={Link} to='/notificaciones'>
+                                    <Nav.Link as={Link} to='/notificaciones'>
                                         Notificaciones
-                                    </NavLink>
+                                    </Nav.Link>
                                     
                                     <NavDropdown title='Crear/Modificar' id="basic-nav-dropdown">
-                                        <NavDropdown.Item href='/registro-arbitro'>Crear/Modifcar Arbitros</NavDropdown.Item>
-                                        <NavDropdown.Item href='/registro-club'>Crear/Modificar Clubs </NavDropdown.Item>
+                                        <NavDropdown.Item as={Link} to='/registro-arbitro'>Crear/Modifcar Arbitros</NavDropdown.Item>
+                                        <NavDropdown.Item as={Link} to='/registro-club'>Crear/Modificar Clubs </NavDropdown.Item>
                                         <NavDropdown.Divider />
-                                        <NavDropdown.Item >
+                                        <NavDropdown.Item as={Link} >
                                            Crear/Modificar Fecha Calendario
                                         </NavDropdown.Item>
                                     </NavDropdown>
+                                    <NavDropdown title='Consultar/Modificar' id="basic-nav-dropdown">
+                                        <NavDropdown.Item as={Link} to=''>Consultar/Modifcar Arbitros</NavDropdown.Item>
+                                        <NavDropdown.Item as={Link} to=''>Consultar/Modificar Clubs </NavDropdown.Item>
+                                        <NavDropdown.Divider />
+                                        <NavDropdown.Item as={Link} >
+                                           Consultar/Modificar Fecha Calendario
+                                        </NavDropdown.Item>
+                                    </NavDropdown>
                                     <NavDropdown className="align-self-end" title={<Navbar.Text>
-                                        Usuario: <Link href="#login">{user}</Link>
+                                        Usuario: {user}
                                     </Navbar.Text>} id="basic-nav-dropdown">
                                         <NavDropdown.Item >Editar Perfil</NavDropdown.Item>
                                         <NavDropdown.Item >Tema oscuro </NavDropdown.Item>

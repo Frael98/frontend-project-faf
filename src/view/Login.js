@@ -38,8 +38,10 @@ export const Login = () => {
         if(usuario === '') return
         
         try {
-            /* const res = await autenticarUsuario({ usuario, contrasenia }); // Param..
-            if (!res) return */
+            const res = await autenticarUsuario({ usuario, contrasenia }); // Param..
+            if (!res) return
+
+            console.log(res)
             setUser(usuario)
             setLogeado(!logeado)
             navigate('/home')

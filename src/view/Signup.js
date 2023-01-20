@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { Row, Col, Form, Button } from "react-bootstrap"
 import { Link } from "react-router-dom"
+import { signupUsuario } from "../services/Peticiones"
 
 /**
  * 
@@ -12,9 +13,9 @@ export const Signup = () => {
     const [apellidos, setApellidos] = useState('')
     const [usuario, setUsuario] = useState('')
     const [correo, setCorreo] = useState('')
-    const [constrasenia, setContrasenia] = useState('')
+    const [contrasenia, setContrasenia] = useState('')
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
 
         var nuevoUsuario = {
@@ -22,9 +23,17 @@ export const Signup = () => {
             apellidos,
             usuario,
             correo,
-            constrasenia
+            contrasenia,
         }
         console.log(nuevoUsuario)
+
+        try {
+            const newUser = await signupUsuario(nuevoUsuario)
+
+            console.log(newUser)
+        } catch (error) {
+            console.log(error)
+        }
     }
     return (<>
         <Row className="justify-content-center my-2 mx-2 background contenedor">
@@ -46,17 +55,14 @@ export const Signup = () => {
                         {/* <Form.Label>Usuario</Form.Label> */}
                     </Form.Group>
                     <Form.Group className="mb-2">
-                        <Form.Control onChange={(e) => {setCorreo(e.target.value)}} type="email" placeholder="juanrodri@email.com" maxLength={25}></Form.Control>
+                        <Form.Control onChange={(e) => {setCorreo(e.target.value)}} type="email" placeholder="example@email.com" maxLength={25}></Form.Control>
                         {/* <Form.Label>Correo</Form.Label> */}
                     </Form.Group>
                     <Form.Group className="mb-2">
                         <Form.Control onChange={(e) => {setContrasenia(e.target.value)}} type="password" placeholder="Contraseña" maxLength={20} autoComplete="current-password"></Form.Control>
                         {/* <Form.Label>Contraseña</Form.Label> */}
                     </Form.Group>
-                    <div className="mb-2 text-center">
-                        <Form.Check inline name="group1" type="radio" label="Masculino" />
-                        <Form.Check inline name="group1" type="radio" label="Femenino" />
-                    </div>
+                    
                     <Button type="submit">Registrarse</Button>
                     <Link className="my-2 text-center" to="/">Ya tengo una cuenta!</Link> 
                 </Form>

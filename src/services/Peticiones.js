@@ -4,6 +4,10 @@ export const autenticarUsuario = async ({}) => {
     return await instance.post('/user/autenticacion')
 }
 
+export const autenticarArbitro = async ({}) => {
+    return await instance.post('/arbitro/autenticacion')
+}
+
 export const saveUsuario = async () => {
     return await instance.post('')
 }

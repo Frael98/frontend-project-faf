@@ -1,42 +1,149 @@
-import { useState } from "react"
-import { Row, Col, Form, Button } from 'react-bootstrap'
+import { useEffect, useState } from "react"
+import { Row, Col, Form, Button, Toast, ToastContainer, Modal } from 'react-bootstrap'
+import { saveArbitro, listarArbitros } from '../../services/peticiones-arbitro/arbitro-re'
 
 export const RegistroArbitro = () => {
 
-    const [validated, setValidated] = useState(false);
-    const [cedula, setCedula] = useState('')
+    const [show, setShow] = useState(false)
 
+    return (
+        <>
+            <h3 className="mx-4 my-2">Registro Arbitros</h3>
+            <Row className="justify-content-center my-2">
+                <Col md="10" className="my-2 p-2 border g-2">
+                    <Button className="" variant="success" onClick={() => setShow(true)}>Nuevo</Button>
+                    <Button className="mx-2" onClick={() => { }}>Imprimir</Button>
+                </Col>
+                <ModalFormulario show={show} onHide={() => setShow(false)} />
+                <Col md="10" className="my-2 border">
+                    <TablaArbitros />
+                </Col>
+            </Row>
+        </>
+    )
+}
+
+const TablaArbitros = () => {
+
+    const [arbitros, setArbitros] = useState([]);
+
+    async function getArbitros() {
+
+        const datos = await (await listarArbitros()).data;
+        setArbitros(datos)
+        /* console.log(datos) */
+        console.log(arbitros)
+    }
+
+    useEffect(() => {
+        getArbitros();
+    }, [])
+
+    return (
+        <>
+            <div className="table-responsive">
+                <table className="table table-sm table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Nombres</th>
+                            <th>Apellidos</th>
+                            <th>Correo</th>
+                            <th>Usuario</th>
+                            <th>Categoria</th>
+                            <th>Direccion</th>
+                            <th>Nacionalidad</th>
+                            <th>Partidos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {arbitros.map((a) => (
+                            <tr key={a.id_arbitro}>
+                                <td>{a.nombre}</td>
+                                <td>{a.apellidos}</td>
+                                <td>{a.correo}</td>
+                                <td>{a.usuario}</td>
+                                <td>{a.categoria}</td>
+                                <td>{a.direccion}</td>
+                                <td>{a.nacionalidad}</td>
+                                <td>{a.partidos}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+        </>
+    );
+}
+
+const ModalFormulario = (props) => {
+
+    const [validated, setValidated] = useState(false);
+    const [alerta, setAlerta] = useState(false)
+
+    const [cedula, setCedula] = useState('')
     const [nombre, setNombre] = useState('')
-    const [apellidos, setApellidos] = useState('')
+    const [apellido, setApellido] = useState('')
     const [usuario, setUsuario] = useState('')
     const [correo, setCorreo] = useState('')
     const [contrasenia, setContrasenia] = useState('')
-    const [anioDebut, setAnioDebut] = useState('')
     const [fechaNacimiento, setFechaNacimiento] = useState('')
-    const [altura, setAltura] = useState('')
-    const [peso, setPeso] = useState('')
     const [categoria, setCategoria] = useState('')
-    const [comite, setComite] = useState('')
     const [direccion, setDireccion] = useState('')
     const [nacionalidad, setNacionalidad] = useState('')
-    const [funcion, setFuncion] = useState('')
     const [partidos, setPartidos] = useState('')
     const [Telefono, setTelefono] = useState('')
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        console.log(`enviando datos`)
+        if (nombre === '' || apellido === '' || usuario == '' || correo == '' || contrasenia === '') {
+            setAlerta(true)
+            return
+        }
+
+        var arbitro = {
+            nombre,
+            apellido,
+            usuario,
+            correo,
+            contrasenia,
+
+            fechaNacimiento,
+            categoria,
+
+            direccion,
+            nacionalidad,
+
+            partidos,
+            Telefono
+        }
+
+        try {
+            const res = await saveArbitro(arbitro);
+            console.log(`enviando datos ${arbitro}`)
+        } catch (error) {
+            console.log(error)
+        }
     }
+
     return (
         <>
-            <h3 className="mx-4 my-2">Registro Arbitros</h3>
-            <Row className="justify-content-center my-2 mx-2 contenedor">
-                <Col md="8" className="my-2">
+            <Modal size="lg" show={props.show} onHide={props.onHide}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Ingresar Arbitro</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
                     <Form noValidate validated={validated} className="row" onSubmit={handleSubmit} >
-                        <Col md='6'>
+                        <Col md='12'>
+                            <Form.Group as={Row} className="mb-2">
+                                <Form.Label className="" column sm='3' >Cedula</Form.Label>
+                                <Col sm='9'>
+                                    <Form.Control size="sm" onChange={(e) => { setCedula(e.target.value) }} type="input" maxLength={25} autoFocus></Form.Control>
+                                </Col>
+                            </Form.Group>
                             <Form.Group as={Row} className="mb-2" controlId="validationNombre">
-                                <Form.Label className="" column sm='3' >Nombres</Form.Label>
+                                <Form.Label className="" column sm='3' >Nombres <span style={{ color: "red" }}>*</span> </Form.Label>
                                 <Col sm='9'>
                                     <Form.Control size="sm" onChange={(e) => { setNombre(e.target.value) }} type="input" maxLength={25} autoFocus required></Form.Control>
                                 </Col>
@@ -44,25 +151,25 @@ export const RegistroArbitro = () => {
                                 <Form.Control.Feedback type="invalid">Porfavor llene el nombre</Form.Control.Feedback>
                             </Form.Group>
                             <Form.Group as={Row} className="mb-2">
-                                <Form.Label className="" column sm='3'>Apellidos</Form.Label>
+                                <Form.Label className="" column sm='3'>Apellidos <span style={{ color: "red" }}>*</span></Form.Label>
                                 <Col sm='9'>
-                                    <Form.Control size="sm" onChange={(e) => { setApellidos(e.target.value) }} type="input" maxLength={25}></Form.Control>
+                                    <Form.Control size="sm" onChange={(e) => { setApellido(e.target.value) }} type="input" maxLength={25}></Form.Control>
                                 </Col>                        </Form.Group>
                             <Form.Group as={Row} className="mb-2">
-                                <Form.Label className="" column sm='3'>Usuario</Form.Label>
+                                <Form.Label className="" column sm='3'>Usuario <span style={{ color: "red" }}>*</span></Form.Label>
                                 <Col sm='9'>
-                                    <Form.Control size="sm" onChange={(e) => { setCedula(e.target.value) }} type="input" maxLength={15}></Form.Control>
+                                    <Form.Control size="sm" onChange={(e) => { setUsuario(e.target.value) }} type="input" maxLength={15}></Form.Control>
                                 </Col>
                             </Form.Group>
                             <Form.Group as={Row} className="mb-2">
-                                <Form.Label className="" column sm='3'>Correo</Form.Label>
+                                <Form.Label className="" column sm='3'>Correo <span style={{ color: "red" }}>*</span></Form.Label>
                                 <Col sm='9'>
                                     <Form.Control size="sm" onChange={(e) => { setCorreo(e.target.value) }} type="email" maxLength={25}></Form.Control>
 
                                 </Col>
                             </Form.Group>
                             <Form.Group as={Row} className="mb-2">
-                                <Form.Label className="" column sm='3'>Contraseña</Form.Label>
+                                <Form.Label className="" column sm='3'>Contraseña <span style={{ color: "red" }}>*</span></Form.Label>
                                 <Col sm='9'>
                                     <Form.Control size="sm" onChange={(e) => { setContrasenia(e.target.value) }} type="password" maxLength={20} autoComplete="current-password"></Form.Control>
 
@@ -78,46 +185,13 @@ export const RegistroArbitro = () => {
                                 <Form.Label className="" column sm='3'>Direccion</Form.Label>
                                 <Col sm='9'>
                                     <Form.Control size="sm" onChange={(e) => { setDireccion(e.target.value) }} type="text" maxLength={20} ></Form.Control>
+                                </Col>
+                            </Form.Group>
 
-                                </Col>
-                            </Form.Group>
-                            <Form.Group as={Row} className="mb-2">
-                                <Form.Label className="" column sm='3'>Funcion</Form.Label>
-                                <Col sm='9'>
-                                    <Form.Control size="sm" onChange={(e) => { setFuncion(e.target.value) }} type="text" maxLength={20} ></Form.Control>
-                                </Col>
-                            </Form.Group>
-                        </Col>
-                        <Col md='6'>
-                            <Form.Group as={Row} className="mb-2">
-                                <Form.Label className="" column sm='3' >Usuario</Form.Label>
-                                <Col sm='9'>
-                                    <Form.Control size="sm" onChange={(e) => { setUsuario(e.target.value) }} type="input" maxLength={25} autoFocus></Form.Control>
-                                </Col>
-                            </Form.Group>
-                            <Form.Group as={Row} className="mb-2">
-                                <Form.Label className="" column sm='3'>Año Debut</Form.Label>
-                                <Col sm='9'>
-                                    <Form.Control size="sm" onChange={(e) => { setAnioDebut(e.target.value) }} type="input" maxLength={25}></Form.Control>
-                                </Col>                        </Form.Group>
                             <Form.Group as={Row} className="mb-2">
                                 <Form.Label className="" column sm='3'>Fecha Naciminento</Form.Label>
                                 <Col sm='9'>
-                                    <Form.Control size="sm" onChange={(e) => { setFechaNacimiento(e.target.value) }} type="input" maxLength={15}></Form.Control>
-                                </Col>
-                            </Form.Group>
-                            <Form.Group as={Row} className="mb-2">
-                                <Form.Label className="" column sm='3'>Altura</Form.Label>
-                                <Col sm='9'>
-                                    <Form.Control size="sm" onChange={(e) => { setAltura(e.target.value) }} type="email" maxLength={25}></Form.Control>
-
-                                </Col>
-                            </Form.Group>
-                            <Form.Group as={Row} className="mb-2">
-                                <Form.Label className="" column sm='3'>Peso</Form.Label>
-                                <Col sm='9'>
-                                    <Form.Control size="sm" onChange={(e) => { setPeso(e.target.value) }} type="password" maxLength={20} autoComplete="current-password"></Form.Control>
-
+                                    <Form.Control size="sm" onChange={(e) => { setFechaNacimiento(e.target.value) }} type="date" maxLength={15}></Form.Control>
                                 </Col>
                             </Form.Group>
                             <Form.Group as={Row} className="mb-2">
@@ -127,23 +201,29 @@ export const RegistroArbitro = () => {
                                 </Col>
                             </Form.Group>
                             <Form.Group as={Row} className="mb-2">
-                                <Form.Label className="" column sm='3'>Comite</Form.Label>
-                                <Col sm='9'>
-                                    <Form.Control size="sm" onChange={(e) => { setComite(e.target.value) }} type="text" maxLength={20} ></Form.Control>
-
-                                </Col>
-                            </Form.Group>
-                            <Form.Group as={Row} className="mb-2">
                                 <Form.Label className="" column sm='3'>Nacionalidad</Form.Label>
                                 <Col sm='9'>
                                     <Form.Control size="sm" onChange={(e) => { setNacionalidad(e.target.value) }} type="text" maxLength={20} ></Form.Control>
                                 </Col>
                             </Form.Group>
                         </Col>
-                        <Button type="submit">Guardar</Button>
                     </Form>
-                </Col>
-            </Row>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="danger" onClick={props.handleDelete}>Eliminar</Button>
+                    <Button variant="success" type="submit">Guardar</Button>
+                </Modal.Footer>
+                {alerta ?
+                    <ToastContainer position="middle-center" >
+                        <Toast bg="dark" onClose={() => setAlerta(false)} show={alerta} animation={true} delay={2000} autohide>
+                            <Toast.Header>
+                                <strong className="me-auto">Info</strong>
+                            </Toast.Header>
+                            <Toast.Body className="text-white">Por favor llene los campos obligatorios <span className="text-danger">*</span>.</Toast.Body>
+                        </Toast>
+                    </ToastContainer>
+                    : ''}
+            </Modal>
         </>
-    )
+    );
 }

@@ -13,6 +13,8 @@ import { RegistroArbitro } from './view/secretaria/RegistroArbitro';
 import { RegistroClub } from './view/secretaria/RegistroClub';
 import { RegistroSecretario } from './view/administrador/RegistroSecretario';
 
+import { Test } from "../src/reportes/ActaPartido";
+
 function App() {
   const [logeado, setLogeado] = useState(false)
   const [user, setUser] = useState('')
@@ -29,6 +31,7 @@ function App() {
           <Route path='/registro-arbitro' element={<RegistroArbitro/>}></Route>
           <Route path='/registro-club' element={<RegistroClub/>}/>
           <Route path='/registro-secretario' element={<RegistroSecretario/>}/>
+          <Route path='/test-pdf' element={<Test/>}/>
 
           <Route path='*' element={<NotFound />} />
         </Routes>

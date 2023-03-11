@@ -1,4 +1,9 @@
-import { Document, Page, StyleSheet, View } from "@react-pdf/renderer";
+import { Document, Page, StyleSheet, View, PDFViewer, Text } from "@react-pdf/renderer";
+import { useState } from "react";
+
+const acta = {
+    titulo: "This is react pdf"
+}
 
 const styles = StyleSheet.create({
     page: {
@@ -12,7 +17,7 @@ const styles = StyleSheet.create({
     }
 })
 
-const ActaPartidoReport = ({acta}) => {
+const ActaPartidoReport = ({ acta }) => {
 
     return (<>
         <Document>
@@ -27,4 +32,21 @@ const ActaPartidoReport = ({acta}) => {
     </>);
 }
 
-export default ActaPartidoReport;
+
+export const Test = () => {
+
+    const [verPDF, setVerPDF] = useState(false)
+    return (< >
+        <div className="my-2 row" style={{ minHeight: "100vh", minWidth: "100vh" }}>
+            <div className="col">
+                <button className="btn btn-info" onClick={() => setVerPDF(!verPDF)}>Imprimir PDF</button>
+            </div>
+
+            {verPDF ?
+                <PDFViewer style={{ with: "900%", height: "90vh" }}>
+                    <ActaPartidoReport acta={acta} />
+                </PDFViewer>
+                : "No hay pdf"}
+        </div>
+    </>);
+}

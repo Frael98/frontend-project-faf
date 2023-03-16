@@ -52,10 +52,12 @@ export const Login = () => {
                 return
             }
 
+            /** Seteo de los datos del user */
             console.log(usuarioSesion.data)
-            setUser(usuarioSesion)
-            setLogeado(!logeado)
-            navigate('/home')
+            setUser(usuarioSesion.data)
+            setLogeado(!logeado) // logeado
+            navigate('/home') // redirect to home
+            
         } catch (error) {
             console.log(error)
         }

@@ -35,24 +35,25 @@ export const NavBar = () => {
                                     <NavDropdown title='Crear/Modificar' id="basic-nav-dropdown">
                                         <NavDropdown.Item as={Link} to='/registro-arbitro'>Crear/Modifcar Arbitros</NavDropdown.Item>
                                         <NavDropdown.Item as={Link} to='/registro-club'>Crear/Modificar Clubs </NavDropdown.Item>
-                                        <NavDropdown.Item as={Link} to='/registro-secretario'>Crear/Modificar Clubs </NavDropdown.Item>
+                                        <NavDropdown.Item as={Link} to='/'>Realizar Sorteos</NavDropdown.Item>
+                                        <NavDropdown.Item as={Link} to='/'>Agendar Partidos Sorteos</NavDropdown.Item>
                                         <NavDropdown.Divider />
                                         <NavDropdown.Item as={Link} >
                                            Crear/Modificar Fecha Calendario
                                         </NavDropdown.Item>
                                     </NavDropdown>
-                                    <NavDropdown title='Consultar/Modificar' id="basic-nav-dropdown">
-                                        <NavDropdown.Item as={Link} to=''>Consultar/Modifcar Arbitros</NavDropdown.Item>
-                                        <NavDropdown.Item as={Link} to=''>Consultar/Modificar Clubs </NavDropdown.Item>
+                                    <NavDropdown title='Consultas' id="basic-nav-dropdown">
+                                        <NavDropdown.Item as={Link} to=''>Consultar Sorteos</NavDropdown.Item>
+                                        <NavDropdown.Item as={Link} to=''>Consultar Actas de Partidos </NavDropdown.Item>
                                         <NavDropdown.Divider />
                                         <NavDropdown.Item as={Link} >
-                                           Consultar/Modificar Fecha Calendario
+                                           Consultar Arbitros Asistencias
                                         </NavDropdown.Item>
                                     </NavDropdown>
                                     <NavDropdown className="align-self-end" title={<Navbar.Text>
                                         Usuario: {user.usuario}
                                     </Navbar.Text>} id="basic-nav-dropdown">
-                                        <NavDropdown.Item >Editar Perfil</NavDropdown.Item>
+                                        <NavDropdown.Item as={Link} to='' >Editar Perfil</NavDropdown.Item>
                                         <NavDropdown.Item >Tema oscuro </NavDropdown.Item>
                                         <NavDropdown.Divider />
                                         <NavDropdown.Item onClick={handleLogout}>

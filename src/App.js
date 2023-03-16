@@ -14,6 +14,7 @@ import { RegistroClub } from './view/secretaria/RegistroClub';
 import { RegistroSecretario } from './view/administrador/RegistroSecretario';
 
 import { Test } from "../src/reportes/ActaPartido";
+import { TablaDatos } from "../src/view/secretaria/test";
 
 function App() {
   const [logeado, setLogeado] = useState(false)
@@ -32,6 +33,7 @@ function App() {
           <Route path='/registro-club' element={<RegistroClub/>}/>
           <Route path='/registro-secretario' element={<RegistroSecretario/>}/>
           <Route path='/test-pdf' element={<Test/>}/>
+          <Route path='/test1' element={<TablaDatos/>}/>
 
           <Route path='*' element={<NotFound />} />
         </Routes>

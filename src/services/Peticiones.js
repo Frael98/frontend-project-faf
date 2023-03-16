@@ -6,12 +6,12 @@ export const autenticarUsuario = async (user) => {
 }
 
 export const autenticarArbitro = async (user) => {
-    return await instance.post(`/arbitro/getArbitroUsuario`, user)
+    return await instance.post(`/arbitro/getArbitro`, user)
 }
 
 //Peticion para registrar un usuario
 export const signupUsuario = async (nuevoUsuario) => {
-    return await instance.post('/administrador/signuo', nuevoUsuario)
+    return await instance.post('/administrador/signup', nuevoUsuario)
 }
 
 

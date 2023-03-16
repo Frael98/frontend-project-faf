@@ -1,7 +1,7 @@
 import {instance} from './../axios';
 //Peticion para editar
-export const editarArbitro = async (id) => {
-    return await instance.put(`${id}`)
+export const obtenerArbitro = async (id) => {
+    return await instance.get(`/arbitro/getArbitro/${id}`)
 }
 
 export const listarArbitros = async () => {
@@ -10,4 +10,12 @@ export const listarArbitros = async () => {
 
 export const saveArbitro = async (arbitro) => {
     return await instance.post(`/arbitro/save`, arbitro)
+}
+
+export const upadteArbitro = async (id, arbitro) => {
+    return await instance.put(`/arbitro/update/${id}`, arbitro)
+}
+
+export const eliminarArbitro = async (id) => {
+    return await instance.delete(`/arbitro/delete/${id}`)
 }

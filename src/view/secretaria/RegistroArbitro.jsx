@@ -27,7 +27,7 @@ export const RegistroArbitro = () => {
         setArbitros(datos)
     }
 
-    const imprimirPDF = ({ datos }) => {
+    const imprimirPDF = () => {
 
     }
 

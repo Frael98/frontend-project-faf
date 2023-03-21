@@ -35,20 +35,17 @@ export const NavBar = () => {
                                     <NavDropdown title='Crear/Modificar' id="basic-nav-dropdown">
                                         <NavDropdown.Item as={Link} to='/registro-arbitro'>Crear/Modifcar Arbitros</NavDropdown.Item>
                                         <NavDropdown.Item as={Link} to='/registro-club'>Crear/Modificar Clubs </NavDropdown.Item>
-                                        <NavDropdown.Item as={Link} to='/'>Realizar Sorteos</NavDropdown.Item>
-                                        <NavDropdown.Item as={Link} to='/'>Agendar Partidos Sorteos</NavDropdown.Item>
+                                        <NavDropdown.Item as={Link} to='/registro-actas'>Registro de Actas </NavDropdown.Item>
+                                        <NavDropdown.Item as={Link} to='/realizar-sorteos'>Realizar Sorteos</NavDropdown.Item>
                                         <NavDropdown.Divider />
-                                        <NavDropdown.Item as={Link} >
-                                           Crear/Modificar Fecha Calendario
-                                        </NavDropdown.Item>
+                                        <NavDropdown.Item as={Link} to='/registro-calendario'>Agendar Partidos</NavDropdown.Item>
+                                        <NavDropdown.Item as={Link} to='/registrar-asistencias'>Registrar Asistencia de Partidos</NavDropdown.Item>
                                     </NavDropdown>
                                     <NavDropdown title='Consultas' id="basic-nav-dropdown">
-                                        <NavDropdown.Item as={Link} to=''>Consultar Sorteos</NavDropdown.Item>
-                                        <NavDropdown.Item as={Link} to=''>Consultar Actas de Partidos </NavDropdown.Item>
+                                        <NavDropdown.Item as={Link} to='/consultar-sorteos'>Consultar Sorteos</NavDropdown.Item>
+                                        <NavDropdown.Item as={Link} to='/consultar-actas'>Consultar Actas de Partidos </NavDropdown.Item>
                                         <NavDropdown.Divider />
-                                        <NavDropdown.Item as={Link} >
-                                           Consultar Arbitros Asistencias
-                                        </NavDropdown.Item>
+                                        <NavDropdown.Item as={Link} to='/consultar-asistencias'>Consultar Arbitros Asistencias</NavDropdown.Item>
                                     </NavDropdown>
                                     <NavDropdown className="align-self-end" title={<Navbar.Text>
                                         Usuario: {user.usuario}

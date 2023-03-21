@@ -11,29 +11,35 @@ import { Notificaciones } from "./view/Notificaciones";
 import { RecuperarCuenta } from "./view/RecuperarCuenta";
 import { RegistroArbitro } from './view/secretaria/RegistroArbitro';
 import { RegistroClub } from './view/secretaria/RegistroClub';
-import { RegistroSecretario } from './view/administrador/RegistroSecretario';
+import { RegistroFechaCalendario } from "./view/secretaria/RegistroFechaCalendario";
+import { ActasPartido } from "./view/arbitraje/ActasPartido";
+import { IngresoAsistencia } from "./view/arbitraje/IngresoAsistencia";
 
 import { Test } from "../src/reportes/ActaPartido";
-import { TablaDatos } from "../src/view/secretaria/test";
+import { Tablas } from "../src/view/secretaria/test";
 
 function App() {
   const [logeado, setLogeado] = useState(false)
   const [user, setUser] = useState('')
   return (
     <>
-      <UsuarioContexto.Provider value={{logeado, setLogeado, user, setUser}}>
+      <UsuarioContexto.Provider value={{ logeado, setLogeado, user, setUser }}>
         <NavBar></NavBar>
         <Routes>
           <Route path='/' element={<Login />} />
           <Route path='/sign' element={<Signup />} />
           <Route path='/home' element={<Home />} />
           <Route path='/notificaciones' element={<Notificaciones />} />
-          <Route path='/recuperar' element={<RecuperarCuenta/>}/>
-          <Route path='/registro-arbitro' element={<RegistroArbitro/>}></Route>
-          <Route path='/registro-club' element={<RegistroClub/>}/>
-          <Route path='/registro-secretario' element={<RegistroSecretario/>}/>
-          <Route path='/test-pdf' element={<Test/>}/>
-          <Route path='/test1' element={<TablaDatos/>}/>
+          <Route path='/recuperar' element={<RecuperarCuenta />} />
+          <Route path='/registro-arbitro' element={<RegistroArbitro />}></Route>
+          <Route path='/registro-club' element={<RegistroClub />} />
+          <Route path='/registro-calendario' element={<RegistroFechaCalendario />} />
+          <Route path='/registro-actas' element={<ActasPartido />} />
+          <Route path='/registrar-asistencias' element={< IngresoAsistencia />} />
+
+
+          <Route path='/test-pdf' element={<Test />} />
+          <Route path='/test1' element={<Tablas />} />
 
           <Route path='*' element={<NotFound />} />
         </Routes>

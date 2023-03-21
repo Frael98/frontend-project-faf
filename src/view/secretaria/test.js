@@ -1,115 +1,68 @@
-import React, { useEffect, useState } from 'react';
-import { Button, Table } from 'react-bootstrap';
-import { Modal } from 'react-bootstrap';
-import { listarArbitros, obtenerArbitro } from '../../services/peticiones-arbitro/arbitro-re'
+import React, { useState } from "react";
+import ReactTable from "react-table";
+/* import "react-table/react-table.css"; */
+import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
 
-/* const datos = [
-    { nombre: 'Juan', apellido: 'Perez' },
-    { nombre: 'Maria', apellido: 'Gonzalez' },
-    { nombre: 'Luis', apellido: 'Garcia' },
-]; */
+const data = [
+  { name: "Juan", lastName: "Perez" },
+  { name: "Maria", lastName: "Garcia" },
+  { name: "Pedro", lastName: "Rodriguez" }
+];
 
-export const TablaDatos = () => {
-    const [show, setShow] = useState(false);
-    const [selectedRow, setSelectedRow] = useState(null);
-    const [datos, setDatos] = useState(null);
-    const handleClose = () => setShow(false);
-    const handleShow = async (row) => {
-        const data = await (await obtenerArbitro(row)).data 
-        setSelectedRow(data);
-        console.log(selectedRow)
-        setShow(true);
-    };
+const styles = StyleSheet.create({
+  page: {
+    flexDirection: "row",
+    backgroundColor: "#E4E4E4"
+  },
+  section: {
+    margin: 10,
+    padding: 10,
+    flexGrow: 1
+  }
+});
 
-    const handleSave = () => {
-        // Aquí puedes hacer algo con los valores actualizados del formulario
-        handleClose();
-    };
+export const Tablas = () => {
+  const [pdfVisible, setPdfVisible] = useState(false);
 
+  const handlePrint = () => {
+    setPdfVisible(true);
+  };
 
-    const getArbitros = async () => {
-        const datos = await (await listarArbitros()).data;
-        setDatos(datos);
+  const handleClosePdf = () => {
+    setPdfVisible(false);
+  };
+
+  const columns = [
+    {
+      Header: "Nombre",
+      accessor: "name"
+    },
+    {
+      Header: "Apellido",
+      accessor: "lastName"
     }
+  ];
 
-    useEffect(() => {
-        getArbitros();
-    })
-
-    return (
-        <>
-            <Table striped bordered hover>
-                <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Apellido</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {datos && datos.map((row, index) => (
-                        <tr key={index}>
-                            <td>{row.nombre}</td>
-                            <td>{row.apellidos}</td>
-                            <td>
-                                <Button variant="primary" onClick={() => handleShow(row.id_arbitro)}>
-                                    Editar
-                                </Button>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </Table>
-            {selectedRow && (
-                <FormularioModal
-                    show={show}
-                    handleClose={handleClose}
-                    handleSave={handleSave}
-                    selectedRow={selectedRow}
-                />
-            )}
-        </>
-    );
+  return (
+    <>
+      <ReactTable data={data} columns={columns} />
+     {/*  <button onClick={handlePrint}>Imprimir</button>
+      {pdfVisible && (
+        <Document>
+          <Page size="A4" style={styles.page}>
+            <View style={styles.section}>
+              {data.map((item, index) => (
+                <View key={index}>
+                  <Text>{item.name}</Text>
+                  <Text>{item.lastName}</Text>
+                </View>
+              ))}
+            </View>
+          </Page>
+        </Document>
+      )}
+      {pdfVisible && <button onClick={handleClosePdf}>Cerrar</button>} */}
+    </>
+  );
 };
-
-
-const FormularioModal = ({ show, handleClose, handleSave, selectedRow }) => {
-    return (
-        <Modal show={show} onHide={handleClose}>
-            <Modal.Header closeButton>
-                <Modal.Title>Editar datos</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                <div className="form-group">
-                    <label htmlFor="nombre">Nombre:</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        id="nombre"
-                        defaultValue={selectedRow.nombre}
-                    />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="apellido">Apellido:</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        id="apellido"
-                        defaultValue={selectedRow.apellidos}
-                    />
-                </div>
-            </Modal.Body>
-            <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
-                    Cerrar
-                </Button>
-                <Button variant="primary" onClick={handleSave}>
-                    Guardar cambios
-                </Button>
-            </Modal.Footer>
-        </Modal>
-    );
-};
-
-
 

@@ -8,3 +8,5 @@ export const ColumnasArbitro = {
     NACIONALIDAD: "Nacionalidad",
     PARTIDOS: "Partidos"
 }
+
+export const ColumnasEquipo = ['Nombre Equipo', 'Director', 'Acciones'];

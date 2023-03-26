@@ -11,12 +11,11 @@ import { Notificaciones } from "./view/Notificaciones";
 import { RecuperarCuenta } from "./view/RecuperarCuenta";
 import { RegistroArbitro } from './view/secretaria/RegistroArbitro';
 import { RegistroClub } from './view/secretaria/RegistroClub';
-import { RegistroFechaCalendario } from "./view/secretaria/RegistroFechaCalendario";
+import { RegistroAgendaPartido } from "./view/secretaria/RegistroAgendaPartido";
 import { ActasPartido } from "./view/arbitraje/ActasPartido";
 import { IngresoAsistencia } from "./view/arbitraje/IngresoAsistencia";
 
-import { Test } from "../src/reportes/ActaPartido";
-import { Tablas } from "../src/view/secretaria/test";
+import { PDFArbitro } from "../src/reportes/ArbitrosReporte";
 
 function App() {
   const [logeado, setLogeado] = useState(false)
@@ -33,13 +32,11 @@ function App() {
           <Route path='/recuperar' element={<RecuperarCuenta />} />
           <Route path='/registro-arbitro' element={<RegistroArbitro />}></Route>
           <Route path='/registro-club' element={<RegistroClub />} />
-          <Route path='/registro-calendario' element={<RegistroFechaCalendario />} />
+          <Route path='/registro-calendario' element={<RegistroAgendaPartido />} />
           <Route path='/registro-actas' element={<ActasPartido />} />
           <Route path='/registrar-asistencias' element={< IngresoAsistencia />} />
 
-
-          <Route path='/test-pdf' element={<Test />} />
-          <Route path='/test1' element={<Tablas />} />
+          <Route path='/pdf-arbitros' element={<PDFArbitro />} />
 
           <Route path='*' element={<NotFound />} />
         </Routes>

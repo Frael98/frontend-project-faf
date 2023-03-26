@@ -9,4 +9,15 @@ export const ColumnasArbitro = {
     PARTIDOS: "Partidos"
 }
 
-export const ColumnasEquipo = ['Nombre Equipo', 'Director', 'Acciones'];
+export const ColumnasArbitros = ["Nombre",
+    "Apellidos",
+    "Correo",
+    "Usuario",
+    "Categoria",
+    "Dirección",
+    "Nacionalidad",
+    "Partidos"]
+
+export const ColumnasEquipo = ['Nombre Equipo', 'Director', 'Eliminar'];
+
+export const ColumnasAgenda = ['Partido', 'Lugar', 'Fecha', 'Hora'];

@@ -2,21 +2,18 @@ import { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 
 export const ModalConfirmacion = ({show, titulo, mensaje, Confirmacion, setModalConfirmacion}) => {
-    /* const [show, setShow] = useState(false); */
-
-
     return (
         <>
-        <Modal show={show}>
-            <Modal.Header>
+        <Modal show={show} centered onHide={()=> {setModalConfirmacion(false)}}>
+            <Modal.Header closeButton>
                 <Modal.Title>{titulo}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 {mensaje}
             </Modal.Body>
             <Modal.Footer>
-                <Button onClick={() => Confirmacion()}>Si</Button>
-                <Button onClick={()=> {setModalConfirmacion(false)}} variant="info">Cancelar</Button>
+                <Button variant="outline-primary" onClick={() => Confirmacion()}>Si</Button>
+                <Button variant="outline-secondary"  onClick={()=> {setModalConfirmacion(false)}} >Cancelar</Button>
             </Modal.Footer>
 
         </Modal>

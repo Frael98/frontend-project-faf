@@ -3,9 +3,8 @@ import { saveArbitro, listarArbitros, obtenerArbitro, upadteArbitro, eliminarArb
 import { useEffect, useState } from "react"
 import { Row, Col, Form, Button, Toast, ToastContainer, Modal } from 'react-bootstrap'
 import { ColumnasArbitro } from "../../models/Columnas"
-
-import { ArbitrosReporte } from "../../reportes/ArbitrosReporte";
 import { ModalConfirmacion } from '../components/ModalConfirmacion';
+import { Search, PlusCircleFill, PrinterFill, Trash3Fill, SaveFill, PencilSquare } from "react-bootstrap-icons"
 
 /**
  * Contiene todo los aspectos del modulo de registro de arbitros
@@ -28,7 +27,7 @@ export const RegistroArbitro = () => {
     }
 
     const imprimirPDF = () => {
-
+        window.open(`/pdf-arbitros`, '_blank', 'width=1024,height=650,left=0,top=0,toolbar=no,titlebar=no,status=no,menubar=no,location=no')
     }
 
     const filtro = (e) => {
@@ -49,8 +48,8 @@ export const RegistroArbitro = () => {
                 <Col md="11" className="my-2 p-2 border g-2 rounded">
                     <Row className="">
                         <Col sm="4">
-                            <Button className="" variant="success" onClick={() => setShow(true)}>Nuevo</Button>
-                            <Button className="mx-2" onClick={() => { setShowPDF(!showPDF) }}>Imprimir</Button>
+                            <Button className="" variant="success" onClick={() => setShow(true)}>Nuevo <PlusCircleFill /> </Button>
+                            <Button className="mx-2" onClick={() => { imprimirPDF() }}>Imprimir <PrinterFill /></Button>
                         </Col>
                         <Col sm="8">
                             <Form.Group as={Row} className="justify-content-end text-center">
@@ -59,10 +58,8 @@ export const RegistroArbitro = () => {
                                     <Form.Control onKeyUp={(e) => filtro(e)} type="text" placeholder="Juanito ..." ></Form.Control>
                                 </Col>
                                 <Col sm="2">
-                                    <Button>Buscar
-                                        <span className="btn-label">
-                                            <i className="bi bi-search"></i>
-                                        </span>
+                                    <Button className="btn-labeled">
+                                        <Search />
                                     </Button>
                                 </Col>
                             </Form.Group>
@@ -72,9 +69,9 @@ export const RegistroArbitro = () => {
                 <Col md="10" className="my-2 border rounded">
                     <TablaArbitros getArbitros={getArbitros} arbitros={arbitrosFiltrados} />
                 </Col>
-                <ModalFormularioEdit show={show} onHide={() => setShow(false)} idArbitroEdit={null} />
+                <ModalFormularioEdit show={show} onHide={() => setShow(false)} idArbitroEdit={null} getArbitros={getArbitros} />
 
-                {showPDF && <ArbitrosReporte titulo={'Listado de Arbitros'} />}
+                {/* {showPDF && <ArbitrosReporte titulo={'Listado de Arbitros'} />} */}
             </Row>
         </>
     )
@@ -97,13 +94,15 @@ const TablaArbitros = ({ getArbitros, arbitros }) => {
      * @param {*} id_arbitro 
      */
     const handleDelete = async () => {
-        console.log()
         const res = await (await eliminarArbitro(idArbitroEdit)).data;
-        console.log(res)
         setModalConfirmacion(false)
         getArbitros();
     }
 
+    /**
+     * Muestra modalConfirmacion
+     * @param {int} id_arbitro 
+     */
     const mostrarModal = id_arbitro => {
         setModalConfirmacion(true);
         setIdArbitroEdit(id_arbitro)
@@ -125,7 +124,7 @@ const TablaArbitros = ({ getArbitros, arbitros }) => {
     return (
         <>
             <div className="table-responsive text-center">
-                <table className="table table-sm table-striped table-hover">
+                <table className="table table-sm table-striped table-bordered table-hover">
                     <thead>
                         <tr>
                             <th>{ColumnasArbitro.NOMBRES}</th>
@@ -152,8 +151,8 @@ const TablaArbitros = ({ getArbitros, arbitros }) => {
                                     <td>{a.nacionalidad}</td>
                                     <td>{a.partidos}</td>
                                     <td>
-                                        <Button onClick={() => { mostrarModal(a.id_arbitro) }} variant="danger">Eliminar</Button>
-                                        <Button onClick={() => handleEdit(a.id_arbitro)} variant="success">Editar</Button>
+                                        <Button onClick={() => { mostrarModal(a.id_arbitro) }} variant="danger"><Trash3Fill /></Button>
+                                        <Button className='mx-1' onClick={() => handleEdit(a.id_arbitro)} variant="success"><PencilSquare /></Button>
                                     </td>
                                 </tr>
                             )) : <div> Esperando respuesta ...</div>}
@@ -187,11 +186,15 @@ const ModalFormularioEdit = ({ idArbitroEdit, show, onHide, titulo, getArbitros 
     const [nacionalidad, setNacionalidad] = useState('')
     const [partidos, setPartidos] = useState('')
 
+    /**
+     * Submit
+     * @param {} e 
+     * @returns 
+     */
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (nombre === '' || apellido === '' || usuario == '' || correo == '' || contrasenia === '') {
             setAlerta(true)
-            console.log("Campos no completos")
             return
         }
 
@@ -199,11 +202,13 @@ const ModalFormularioEdit = ({ idArbitroEdit, show, onHide, titulo, getArbitros 
             handleUpdate();
             return;
         }
-
         handleSave();
 
     }
 
+    /**
+     * Actulizar
+     */
     const handleUpdate = async () => {
         var arbitro = {
             nombre,
@@ -226,8 +231,12 @@ const ModalFormularioEdit = ({ idArbitroEdit, show, onHide, titulo, getArbitros 
         }
         onHide(true);
         getArbitros();
+        clearTexts();
     }
 
+    /**
+     * Guadar
+     */
     const handleSave = async () => {
 
         var arbitro = {
@@ -250,11 +259,15 @@ const ModalFormularioEdit = ({ idArbitroEdit, show, onHide, titulo, getArbitros 
             console.log(error)
         }
         onHide(true);
+        getArbitros();
+        clearTexts();
     }
 
+    /**
+     * 
+     * @returns 
+     */
     const handleEdit = async () => {
-
-        /* console.log(idArbitroEdit) */
         if (idArbitroEdit === null || idArbitroEdit === 0) {
             console.log(`Id arbitro es cero`);
             return;
@@ -274,6 +287,21 @@ const ModalFormularioEdit = ({ idArbitroEdit, show, onHide, titulo, getArbitros 
 
     }
 
+    /**
+     * Limpia input
+     */
+    const clearTexts = () => {
+        setNombre('')
+        setApellido('')
+        setUsuario('')
+        setCorreo('')
+        setContrasenia('')
+        setDireccion('')
+        setPartidos('')
+        setCategoria('')
+        setFechaNacimiento('')
+        setNacionalidad('')
+    }
 
     useEffect(() => {
         handleEdit();
@@ -350,7 +378,7 @@ const ModalFormularioEdit = ({ idArbitroEdit, show, onHide, titulo, getArbitros 
                         </Col>
                         <Modal.Footer>
                             {/* <Button variant="danger" onClick={handleDelete}>Eliminar</Button> */}
-                            <Button variant="success" type="submit">Guardar</Button>
+                            <Button variant="success" type="submit">Guardar <SaveFill /> </Button>
                         </Modal.Footer>
                     </Form>
                 </Modal.Body>

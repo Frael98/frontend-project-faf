@@ -64,9 +64,9 @@ export const Login = () => {
     }
 
     return (
-        <>
-            <Row className="my-4 justify-content-center">
-                <Col md='4'>
+        <div className="container">{/* Ajusta en horizantal */}
+            <Row className="my-4 justify-content-center p-4">
+                <Col md='6' sm='6' xl='4' >
                     {showAlert ? <Alert key="danger" variant="danger">
                         Usuario o contraseña incorrecto, asegurese de tener una cuenta!.
                     </Alert> : ''}
@@ -96,6 +96,6 @@ export const Login = () => {
                     </Form>
                 </Col>
             </Row >
-        </>
+        </div>
     )
 }

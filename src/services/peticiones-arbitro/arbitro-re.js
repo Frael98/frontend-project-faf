@@ -19,3 +19,9 @@ export const upadteArbitro = async (id, arbitro) => {
 export const eliminarArbitro = async (id) => {
     return await instance.delete(`/arbitro/delete/${id}`)
 }
+// PDF
+export const downloadPDF = async () => {
+    return await instance.get(`/pdf-arbitros/generate-pdf`, {
+        responseType: 'blob', // Solicita una respuesta binaria (archivo)
+    });
+}

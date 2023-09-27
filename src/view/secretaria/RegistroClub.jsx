@@ -97,7 +97,8 @@ const TablaEquipos = ({ equipos, getEquipos, refer }) => {
 
     const handleDelete = async () => {
         const data = await (await eliminarEquipo(idEquipoEdit)).data
-        console.log(data)
+        /* console.log('Eliminacion de club')
+        console.log(data) */
         setModalConfirmacion(false);
         getEquipos();
     }

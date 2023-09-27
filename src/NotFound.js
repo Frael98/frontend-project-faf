@@ -8,8 +8,7 @@ export function NotFound() {
           NotFound 404
         </h1>
         <div className='row justify-content-center mb-5 mx-auto d-block'>
-          <img src={imagen} className="rounded img-thumbnail
-          "></img>
+          <img src={imagen} className="rounded img-fluid"></img>
         </div>
       </div>
     </>

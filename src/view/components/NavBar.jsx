@@ -50,7 +50,6 @@ export const NavBar = () => {
                                     <NavDropdown className="align-self-end" title={<Navbar.Text>
                                         Usuario: {user.usuario}
                                     </Navbar.Text>} id="basic-nav-dropdown">
-                                        <NavDropdown.Item as={Link} to='' >Editar Perfil</NavDropdown.Item>
                                         <NavDropdown.Item >Tema oscuro </NavDropdown.Item>
                                         <NavDropdown.Divider />
                                         <NavDropdown.Item onClick={handleLogout}>

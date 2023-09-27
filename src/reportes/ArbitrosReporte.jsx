@@ -1,5 +1,6 @@
+/* Uso de react-pdf */
 import React, { useEffect, useState } from "react";
-
+// importamos los componentes
 import {
   Document,
   Page,
@@ -8,8 +9,7 @@ import {
 import { listarArbitros } from "../services/peticiones-arbitro/arbitro-re";
 import { ColumnasArbitros } from "../models/Columnas";
 
-
-
+// Configuracion de los estilos
 const styles = StyleSheet.create({
   View: {
     minHeight: '100vh',
@@ -78,7 +78,8 @@ const Encabezado = () => {
 }
 
 /**
- * 
+ * Tabla Arbitros
+ * @param arbitros
  * @returns 
  */
 const Tabla = ({ arbitros }) => {
@@ -153,7 +154,7 @@ export const PDFArbitro = () => {
     <>
       <PDFViewer style={styles.View}>
         <Document>
-          <Page size="A4" style={styles.page}>
+          <Page size="A4" orientation="landscape" style={styles.page}>
             <View>
               <Encabezado />
               <Tabla arbitros={arbitros}></Tabla>

@@ -1,4 +1,4 @@
-import { saveArbitro, listarArbitros, obtenerArbitro, upadteArbitro, eliminarArbitro, downloadPDF } from '../../services/peticiones-arbitro/arbitro-re' // ^Peticiones
+import { saveArbitro, listarArbitros, obtenerArbitro, upadteArbitro, eliminarArbitro, downloadPDF } from '../../services/peticiones/arbitro-re' // ^Peticiones
 
 import { useEffect, useState } from "react"
 import { Row, Col, Form, Button, Toast, ToastContainer, Modal, OverlayTrigger, Tooltip } from 'react-bootstrap'

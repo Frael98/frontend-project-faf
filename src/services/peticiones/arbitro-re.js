@@ -1,4 +1,4 @@
-import {instance} from './../axios';
+import {instance} from '../axios';
 //Peticion para editar
 export const obtenerArbitro = async (id) => {
     return await instance.get(`/arbitro/getArbitro/${id}`)

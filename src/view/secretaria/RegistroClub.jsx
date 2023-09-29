@@ -2,7 +2,7 @@ import React from 'react'
 import { useEffect, useRef, useState } from "react"
 import { Form, Row, Col, Modal, Button, Pagination } from "react-bootstrap"
 import { ColumnasEquipo } from "../../models/Columnas"
-import { eliminarEquipo, listarEquipos, listarEquipos_, obtenerEquipo, saveEquipo, upadteEquipo } from "../../services/peticiones-arbitro/equipo-re"
+import { eliminarEquipo, listarEquipos, listarEquipos_, obtenerEquipo, saveEquipo, upadteEquipo } from "../../services/peticiones/equipo-re"
 import { Search, PlusCircleFill, PrinterFill, Trash3Fill, SaveFill } from "react-bootstrap-icons"
 import { ModalConfirmacion } from "../components/ModalConfirmacion"
 import Pdf from 'react-to-pdf' // uso de react-to-pdf

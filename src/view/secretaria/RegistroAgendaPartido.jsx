@@ -1,5 +1,8 @@
 import { Table } from "react-bootstrap";
 import { ColumnasAgenda } from "../../models/Columnas";
+import { useEffect, useState } from "react"
+import { Row, Col, Form, Button, Toast, ToastContainer, Modal, OverlayTrigger, Tooltip } from 'react-bootstrap'
+import { ModalConfirmacion } from '../components/ModalConfirmacion';
 
 export const RegistroAgendaPartido = () => {
     return (

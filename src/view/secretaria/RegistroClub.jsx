@@ -1,7 +1,7 @@
 import React from 'react'
 import { useEffect, useRef, useState } from "react"
 import { Form, Row, Col, Modal, Button, Pagination } from "react-bootstrap"
-import { ColumnasEquipo } from "../../models/Columnas"
+import { ColumnasEquipo } from "../../Constants/Columnas"
 import { eliminarEquipo, listarEquipos, listarEquipos_, obtenerEquipo, saveEquipo, upadteEquipo } from "../../services/peticiones/equipo-re"
 import { Search, PlusCircleFill, PrinterFill, Trash3Fill, SaveFill } from "react-bootstrap-icons"
 import { ModalConfirmacion } from "../components/ModalConfirmacion"

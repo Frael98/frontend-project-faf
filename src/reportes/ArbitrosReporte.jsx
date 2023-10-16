@@ -7,7 +7,7 @@ import {
   Text, View, StyleSheet, PDFViewer
 } from "@react-pdf/renderer";
 import { listarArbitros } from "../services/peticiones/arbitro-re";
-import { ColumnasArbitros } from "../models/Columnas";
+import { ColumnasArbitros } from "../Constants/Columnas";
 
 // Configuracion de los estilos
 const styles = StyleSheet.create({

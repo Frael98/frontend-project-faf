@@ -2,7 +2,7 @@ import { saveArbitro, listarArbitros, obtenerArbitro, upadteArbitro, eliminarArb
 
 import { useEffect, useState } from "react"
 import { Row, Col, Form, Button, Toast, ToastContainer, Modal, OverlayTrigger, Tooltip } from 'react-bootstrap'
-import { ColumnasArbitro } from "../../models/Columnas"
+import { ColumnasArbitro } from "../../Constants/Columnas"
 import { ModalConfirmacion } from '../components/ModalConfirmacion';
 import { Search, PlusCircleFill, PrinterFill, Trash3Fill, SaveFill, PencilSquare } from "react-bootstrap-icons"
 import MyPagination from '../components/MyPagination';
@@ -78,7 +78,7 @@ export const RegistroArbitro = () => {
             <Row className="justify-content-center my-2">
                 <Col md="11" sm='11' className="my-2 p-2 border g-2 rounded">
                     <Row className="d-flex align-items-center">
-        
+
                         <Col sm="12" md='4' className='d-inline alig-items-center'>
                             <Button className="" variant="success" onClick={() => setShow(true)}>Nuevo <PlusCircleFill /> </Button>
                             <OverlayTrigger placement='top' sm="auto" overlay={tooltip[0]}>
@@ -104,7 +104,7 @@ export const RegistroArbitro = () => {
                 <Col md="12" sm='12' className="my-2 border rounded">
                     <TablaArbitros getArbitros={getArbitros} arbitros={arbitrosFiltrados} />
                 </Col>
-                <ModalFormularioEdit show={show} onHide={() => setShow(false)} idArbitroEdit={null} getArbitros={getArbitros} />
+                {show && <ModalFormularioEdit show={show} onHide={() => setShow(false)} idArbitroEdit={null} getArbitros={getArbitros} />}
 
 
                 {/* {showPDF && <ArbitrosReporte titulo={'Listado de Arbitros'} />} */}
@@ -216,7 +216,7 @@ const TablaArbitros = ({ getArbitros, arbitros }) => {
                         </table>
 
                         <MyPagination irAPagina={irAPagina} paginaActual={paginaActual} totalPaginas={totalPaginas}></MyPagination>
-                        {<ModalFormularioEdit titulo="Editar Arbitro" show={editar} onHide={() => setEditar(false)} idArbitroEdit={idArbitroEdit} getArbitros={getArbitros} />}
+                        {editar && <ModalFormularioEdit titulo="Editar Arbitro" show={editar} onHide={() => setEditar(false)} idArbitroEdit={idArbitroEdit} getArbitros={getArbitros} />}
                         {modalConfirmacion && <ModalConfirmacion show={modalConfirmacion} setModalConfirmacion={setModalConfirmacion} titulo={"Mensaje"} mensaje={"Desea eliminar este registro?"} Confirmacion={handleDelete} />}
                     </div>
             }
@@ -235,7 +235,7 @@ const ModalFormularioEdit = ({ idArbitroEdit, show, onHide, titulo, getArbitros 
     const [validated, setValidated] = useState(false);
     const [alerta, setAlerta] = useState(false)
 
-    const [nombre, setNombre] = useState('')
+    /* const [nombre, setNombre] = useState('')
     const [apellido, setApellido] = useState('')
     const [usuario, setUsuario] = useState('')
     const [correo, setCorreo] = useState('')
@@ -244,7 +244,24 @@ const ModalFormularioEdit = ({ idArbitroEdit, show, onHide, titulo, getArbitros 
     const [categoria, setCategoria] = useState('')
     const [direccion, setDireccion] = useState('')
     const [nacionalidad, setNacionalidad] = useState('')
-    const [partidos, setPartidos] = useState('')
+    const [partidos, setPartidos] = useState('') */
+
+    const [arbitro, setArbitro] = useState({
+        nombre: '',
+        apellido: '',
+        usuario: '',
+        correo: '',
+        contrasenia: '',
+        fechaNacimiento: '',
+        categoria: '',
+        direccion: '',
+        nacionalidad: '',
+        partidos: '',
+    })
+
+    const handleChange = (e) => {
+        setArbitro( prev => ({...prev, [e.target.name]: e.target.value}))
+    }
 
     /**
      * Submit
@@ -270,7 +287,7 @@ const ModalFormularioEdit = ({ idArbitroEdit, show, onHide, titulo, getArbitros 
      * Actulizar
      */
     const handleUpdate = async () => {
-        var arbitro = {
+        /* var arbitro = {
             nombre,
             apellido,
             usuario,
@@ -282,7 +299,7 @@ const ModalFormularioEdit = ({ idArbitroEdit, show, onHide, titulo, getArbitros 
             nacionalidad,
             partidos
         }
-
+ */
         try {
             const res = await (await upadteArbitro(idArbitroEdit, arbitro)).data;
             console.log("Actualizando datos")
@@ -299,7 +316,7 @@ const ModalFormularioEdit = ({ idArbitroEdit, show, onHide, titulo, getArbitros 
      */
     const handleSave = async () => {
 
-        var arbitro = {
+        /* var arbitro = {
             nombre,
             apellido,
             usuario,
@@ -310,7 +327,7 @@ const ModalFormularioEdit = ({ idArbitroEdit, show, onHide, titulo, getArbitros 
             direccion,
             nacionalidad,
             partidos
-        }
+        } */
 
         try {
             const res = await saveArbitro(arbitro);
@@ -332,9 +349,22 @@ const ModalFormularioEdit = ({ idArbitroEdit, show, onHide, titulo, getArbitros 
             console.log(`Id arbitro es cero`);
             return;
         }
-        const arbitro = await (await obtenerArbitro(idArbitroEdit)).data
+        const arbitroEdit = await (await obtenerArbitro(idArbitroEdit)).data
         console.log(arbitro)
-        setNombre(arbitro.nombre)
+
+        setArbitro({
+            nombre: arbitroEdit.nombre,
+            apellido: arbitroEdit.apellido,
+            usuario: arbitroEdit.usuario,
+            correo: arbitroEdit.correo,
+            contrasenia: arbitroEdit.contrasenia,
+            direccion: arbitroEdit.direccion ?? '',
+            partidos: arbitroEdit.partidos ?? '',
+            categoria: arbitroEdit.categoria ?? '',
+            fechaNacimiento: arbitroEdit.fechaNacimiento ?? '',
+            nacionalidad: arbitroEdit.nacionalidad ?? '',
+        })
+        /* setNombre(arbitro.nombre)
         setApellido(arbitro.apellido)
         setUsuario(arbitro.usuario)
         setCorreo(arbitro.correo)
@@ -343,7 +373,7 @@ const ModalFormularioEdit = ({ idArbitroEdit, show, onHide, titulo, getArbitros 
         setPartidos(arbitro.partidos ?? '')
         setCategoria(arbitro.categoria ?? '')
         setFechaNacimiento(arbitro.fechaNacimiento ?? '')
-        setNacionalidad(arbitro.nacionalidad ?? '')
+        setNacionalidad(arbitro.nacionalidad ?? '') */
 
     }
 
@@ -351,7 +381,19 @@ const ModalFormularioEdit = ({ idArbitroEdit, show, onHide, titulo, getArbitros 
      * Limpia input
      */
     const clearTexts = () => {
-        setNombre('')
+        setArbitro({
+            nombre: '',
+            apellido: '',
+            usuario: '',
+            correo: '',
+            contrasenia: '',
+            fechaNacimiento: '',
+            categoria: '',
+            direccion: '',
+            nacionalidad: '',
+            partidos: '',
+        })
+        /* setNombre('')
         setApellido('')
         setUsuario('')
         setCorreo('')
@@ -360,7 +402,7 @@ const ModalFormularioEdit = ({ idArbitroEdit, show, onHide, titulo, getArbitros 
         setPartidos('')
         setCategoria('')
         setFechaNacimiento('')
-        setNacionalidad('')
+        setNacionalidad('') */
     }
 
     useEffect(() => {
@@ -380,7 +422,7 @@ const ModalFormularioEdit = ({ idArbitroEdit, show, onHide, titulo, getArbitros 
                             <Form.Group as={Row} className="mb-2" controlId="validationNombre">
                                 <Form.Label className="" column sm='3' >Nombres <span style={{ color: "red" }}>*</span> </Form.Label>
                                 <Col sm='9'>
-                                    <Form.Control size="sm" value={nombre} onChange={(e) => { setNombre(e.target.value) }} type="input" maxLength={25} autoFocus required></Form.Control>
+                                    <Form.Control size="sm" name='nombre' value={arbitro?.nombre} onChange={handleChange} type="input" maxLength={25} autoFocus required></Form.Control>
                                 </Col>
                                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                 <Form.Control.Feedback type="invalid">Porfavor llene el nombre</Form.Control.Feedback>
@@ -388,51 +430,51 @@ const ModalFormularioEdit = ({ idArbitroEdit, show, onHide, titulo, getArbitros 
                             <Form.Group as={Row} className="mb-2">
                                 <Form.Label className="" column sm='3'>Apellidos <span style={{ color: "red" }}>*</span></Form.Label>
                                 <Col sm='9'>
-                                    <Form.Control size="sm" value={apellido} onChange={(e) => { setApellido(e.target.value) }} type="input" maxLength={25}></Form.Control>
+                                    <Form.Control size="sm" name='apellido' value={arbitro?.apellido} onChange={handleChange} type="input" maxLength={25}></Form.Control>
                                 </Col>                        </Form.Group>
                             <Form.Group as={Row} className="mb-2">
                                 <Form.Label className="" column sm='3'>Usuario <span style={{ color: "red" }}>*</span></Form.Label>
                                 <Col sm='9'>
-                                    <Form.Control size="sm" value={usuario} onChange={(e) => { setUsuario(e.target.value) }} type="input" maxLength={15}></Form.Control>
+                                    <Form.Control size="sm" name='usuario' value={arbitro?.usuario} onChange={handleChange} type="input" maxLength={15}></Form.Control>
                                 </Col>
                             </Form.Group>
                             <Form.Group as={Row} className="mb-2">
                                 <Form.Label className="" column sm='3'>Correo <span style={{ color: "red" }}>*</span></Form.Label>
                                 <Col sm='9'>
-                                    <Form.Control size="sm" value={correo} onChange={(e) => { setCorreo(e.target.value) }} type="email" maxLength={25}></Form.Control>
+                                    <Form.Control size="sm" name='correo' value={arbitro?.correo} onChange={handleChange} type="email" maxLength={25}></Form.Control>
 
                                 </Col>
                             </Form.Group>
                             <Form.Group as={Row} className="mb-2">
                                 <Form.Label className="" column sm='3'>Contraseña <span style={{ color: "red" }}>*</span></Form.Label>
                                 <Col sm='9'>
-                                    <Form.Control size="sm" value={contrasenia} onChange={(e) => { setContrasenia(e.target.value) }} type="password" maxLength={20} autoComplete="current-password"></Form.Control>
+                                    <Form.Control size="sm" name='contrasenia' value={arbitro?.contrasenia} onChange={handleChange} type="password" maxLength={20} autoComplete="current-password"></Form.Control>
 
                                 </Col>
                             </Form.Group>
                             <Form.Group as={Row} className="mb-2">
                                 <Form.Label className="" column sm='3'>Direccion</Form.Label>
                                 <Col sm='9'>
-                                    <Form.Control size="sm" value={direccion} onChange={(e) => { setDireccion(e.target.value) }} type="text" maxLength={20} ></Form.Control>
+                                    <Form.Control size="sm" name='direccion' value={arbitro?.direccion} onChange={handleChange} type="text" maxLength={20} ></Form.Control>
                                 </Col>
                             </Form.Group>
 
                             <Form.Group as={Row} className="mb-2">
                                 <Form.Label className="" column sm='3'>Fecha Naciminento</Form.Label>
                                 <Col sm='9'>
-                                    <Form.Control size="sm" value={fechaNacimiento} onChange={(e) => { setFechaNacimiento(e.target.value) }} type="date" maxLength={15}></Form.Control>
+                                    <Form.Control size="sm" name='fechaNacimiento' value={arbitro?.fechaNacimiento} onChange={handleChange} type="date" maxLength={15}></Form.Control>
                                 </Col>
                             </Form.Group>
                             <Form.Group as={Row} className="mb-2">
                                 <Form.Label className="" column sm='3'>Categoria</Form.Label>
                                 <Col sm='9'>
-                                    <Form.Control size="sm" value={categoria} onChange={(e) => { setCategoria(e.target.value) }} type="text" maxLength={20} ></Form.Control>
+                                    <Form.Control size="sm" name='categoria' value={arbitro?.categoria} onChange={handleChange} type="text" maxLength={20} ></Form.Control>
                                 </Col>
                             </Form.Group>
                             <Form.Group as={Row} className="mb-2">
                                 <Form.Label className="" column sm='3'>Nacionalidad</Form.Label>
                                 <Col sm='9'>
-                                    <Form.Control size="sm" value={nacionalidad} onChange={(e) => { setNacionalidad(e.target.value) }} type="text" maxLength={20} ></Form.Control>
+                                    <Form.Control size="sm" name='nacionalidad' value={arbitro?.nacionalidad} onChange={handleChange} type="text" maxLength={20} ></Form.Control>
                                 </Col>
                             </Form.Group>
                         </Col>

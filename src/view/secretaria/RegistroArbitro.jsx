@@ -235,24 +235,13 @@ const ModalFormularioEdit = ({ idArbitroEdit, show, onHide, titulo, getArbitros 
     const [validated, setValidated] = useState(false);
     const [alerta, setAlerta] = useState(false)
 
-    /* const [nombre, setNombre] = useState('')
-    const [apellido, setApellido] = useState('')
-    const [usuario, setUsuario] = useState('')
-    const [correo, setCorreo] = useState('')
-    const [contrasenia, setContrasenia] = useState('')
-    const [fechaNacimiento, setFechaNacimiento] = useState('')
-    const [categoria, setCategoria] = useState('')
-    const [direccion, setDireccion] = useState('')
-    const [nacionalidad, setNacionalidad] = useState('')
-    const [partidos, setPartidos] = useState('') */
-
     const [arbitro, setArbitro] = useState({
         nombre: '',
         apellido: '',
         usuario: '',
         correo: '',
         contrasenia: '',
-        fechaNacimiento: '',
+        fechaNacimiento: 0,
         categoria: '',
         direccion: '',
         nacionalidad: '',
@@ -260,7 +249,7 @@ const ModalFormularioEdit = ({ idArbitroEdit, show, onHide, titulo, getArbitros 
     })
 
     const handleChange = (e) => {
-        setArbitro( prev => ({...prev, [e.target.name]: e.target.value}))
+       setArbitro( prev => ({...prev, [e.target.name]: e.target.value}))
     }
 
     /**
@@ -270,7 +259,7 @@ const ModalFormularioEdit = ({ idArbitroEdit, show, onHide, titulo, getArbitros 
      */
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (nombre === '' || apellido === '' || usuario == '' || correo == '' || contrasenia === '') {
+        if (arbitro.nombre === '' || arbitro.apellido === '' || arbitro.usuario == '' || arbitro.correo == '' || arbitro.contrasenia === '') {
             setAlerta(true)
             return
         }
@@ -287,19 +276,6 @@ const ModalFormularioEdit = ({ idArbitroEdit, show, onHide, titulo, getArbitros 
      * Actulizar
      */
     const handleUpdate = async () => {
-        /* var arbitro = {
-            nombre,
-            apellido,
-            usuario,
-            correo,
-            contrasenia,
-            fechaNacimiento,
-            categoria,
-            direccion,
-            nacionalidad,
-            partidos
-        }
- */
         try {
             const res = await (await upadteArbitro(idArbitroEdit, arbitro)).data;
             console.log("Actualizando datos")
@@ -315,19 +291,6 @@ const ModalFormularioEdit = ({ idArbitroEdit, show, onHide, titulo, getArbitros 
      * Guadar
      */
     const handleSave = async () => {
-
-        /* var arbitro = {
-            nombre,
-            apellido,
-            usuario,
-            correo,
-            contrasenia,
-            fechaNacimiento,
-            categoria,
-            direccion,
-            nacionalidad,
-            partidos
-        } */
 
         try {
             const res = await saveArbitro(arbitro);
@@ -345,35 +308,29 @@ const ModalFormularioEdit = ({ idArbitroEdit, show, onHide, titulo, getArbitros 
      * @returns 
      */
     const handleEdit = async () => {
+
         if (idArbitroEdit === null || idArbitroEdit === 0) {
             console.log(`Id arbitro es cero`);
             return;
         }
         const arbitroEdit = await (await obtenerArbitro(idArbitroEdit)).data
-        console.log(arbitro)
-
-        setArbitro({
+        console.log(arbitroEdit)
+        setArbitro( prev => ({ ...prev,
             nombre: arbitroEdit.nombre,
             apellido: arbitroEdit.apellido,
             usuario: arbitroEdit.usuario,
-            correo: arbitroEdit.correo,
-            contrasenia: arbitroEdit.contrasenia,
-            direccion: arbitroEdit.direccion ?? '',
-            partidos: arbitroEdit.partidos ?? '',
-            categoria: arbitroEdit.categoria ?? '',
-            fechaNacimiento: arbitroEdit.fechaNacimiento ?? '',
-            nacionalidad: arbitroEdit.nacionalidad ?? '',
-        })
-        /* setNombre(arbitro.nombre)
-        setApellido(arbitro.apellido)
-        setUsuario(arbitro.usuario)
-        setCorreo(arbitro.correo)
-        setContrasenia(arbitro.contrasenia)
-        setDireccion(arbitro.direccion ?? '')
-        setPartidos(arbitro.partidos ?? '')
-        setCategoria(arbitro.categoria ?? '')
-        setFechaNacimiento(arbitro.fechaNacimiento ?? '')
-        setNacionalidad(arbitro.nacionalidad ?? '') */
+            correo: arbitroEdit.correo ,
+            contrasenia: arbitroEdit.contrasenia ,
+            direccion: arbitroEdit.direccion ,
+            partidos: arbitroEdit.partidos ,
+            categoria: arbitroEdit.categoria ,
+            fechaNacimiento: (arbitroEdit.fechaNacimiento),
+            nacionalidad: arbitroEdit.nacionalidad ,
+        }))
+
+        //setArbitro(arbitroEdit)
+
+        //console.log(arbitro)
 
     }
 
@@ -393,16 +350,6 @@ const ModalFormularioEdit = ({ idArbitroEdit, show, onHide, titulo, getArbitros 
             nacionalidad: '',
             partidos: '',
         })
-        /* setNombre('')
-        setApellido('')
-        setUsuario('')
-        setCorreo('')
-        setContrasenia('')
-        setDireccion('')
-        setPartidos('')
-        setCategoria('')
-        setFechaNacimiento('')
-        setNacionalidad('') */
     }
 
     useEffect(() => {

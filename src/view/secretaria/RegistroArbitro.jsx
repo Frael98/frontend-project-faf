@@ -6,6 +6,7 @@ import { ColumnasArbitro } from "../../Constants/Columnas"
 import { ModalConfirmacion } from '../components/ModalConfirmacion';
 import { Search, PlusCircleFill, PrinterFill, Trash3Fill, SaveFill, PencilSquare } from "react-bootstrap-icons"
 import MyPagination from '../components/MyPagination';
+import ToastMessage from '../utils/toast';
 
 
 const tooltip = [
@@ -234,6 +235,7 @@ const ModalFormularioEdit = ({ idArbitroEdit, show, onHide, titulo, getArbitros 
 
     const [validated, setValidated] = useState(false);
     const [alerta, setAlerta] = useState(false)
+    const [message, setMessage] = useState('')
 
     const [arbitro, setArbitro] = useState({
         nombre: '',
@@ -249,7 +251,7 @@ const ModalFormularioEdit = ({ idArbitroEdit, show, onHide, titulo, getArbitros 
     })
 
     const handleChange = (e) => {
-       setArbitro( prev => ({...prev, [e.target.name]: e.target.value}))
+        setArbitro(prev => ({ ...prev, [e.target.name]: e.target.value }))
     }
 
     /**
@@ -261,6 +263,7 @@ const ModalFormularioEdit = ({ idArbitroEdit, show, onHide, titulo, getArbitros 
         e.preventDefault();
         if (arbitro.nombre === '' || arbitro.apellido === '' || arbitro.usuario == '' || arbitro.correo == '' || arbitro.contrasenia === '') {
             setAlerta(true)
+            setMessage('Por favor llene todos los campos')
             return
         }
 
@@ -273,28 +276,32 @@ const ModalFormularioEdit = ({ idArbitroEdit, show, onHide, titulo, getArbitros 
     }
 
     /**
-     * Actulizar
+     * Actualizar
      */
     const handleUpdate = async () => {
         try {
             const res = await (await upadteArbitro(idArbitroEdit, arbitro)).data;
             console.log("Actualizando datos")
+            setMessage('Datos actualizados correctamente')
+            setAlerta(true)
         } catch (error) {
 
         }
-        onHide(true);
+        //onHide(true);
         getArbitros();
         clearTexts();
     }
 
     /**
-     * Guadar
+     * Guardar
      */
     const handleSave = async () => {
 
         try {
             const res = await saveArbitro(arbitro);
             console.log(`enviando datos ${arbitro}`)
+            setAlerta(true)
+            setMessage('Datos guardados correctamente')
         } catch (error) {
             console.log(error)
         }
@@ -314,18 +321,19 @@ const ModalFormularioEdit = ({ idArbitroEdit, show, onHide, titulo, getArbitros 
             return;
         }
         const arbitroEdit = await (await obtenerArbitro(idArbitroEdit)).data
-        console.log(arbitroEdit)
-        setArbitro( prev => ({ ...prev,
+        // console.log(arbitroEdit)
+        setArbitro(prev => ({
+            ...prev,
             nombre: arbitroEdit.nombre,
             apellido: arbitroEdit.apellido,
             usuario: arbitroEdit.usuario,
-            correo: arbitroEdit.correo ,
-            contrasenia: arbitroEdit.contrasenia ,
-            direccion: arbitroEdit.direccion ,
-            partidos: arbitroEdit.partidos ,
-            categoria: arbitroEdit.categoria ,
-            fechaNacimiento: (arbitroEdit.fechaNacimiento),
-            nacionalidad: arbitroEdit.nacionalidad ,
+            correo: arbitroEdit.correo,
+            contrasenia: arbitroEdit.contrasenia,
+            direccion: arbitroEdit.direccion,
+            partidos: arbitroEdit.partidos,
+            categoria: arbitroEdit.categoria,
+            fechaNacimiento: new Date(arbitroEdit.fechaNacimiento).toISOString().split('T')[0],
+            nacionalidad: arbitroEdit.nacionalidad,
         }))
 
         //setArbitro(arbitroEdit)
@@ -433,14 +441,7 @@ const ModalFormularioEdit = ({ idArbitroEdit, show, onHide, titulo, getArbitros 
                 </Modal.Body>
 
                 {alerta ?
-                    <ToastContainer position="middle-center" >
-                        <Toast bg="dark" onClose={() => setAlerta(false)} show={alerta} animation={true} delay={2000} autohide>
-                            <Toast.Header>
-                                <strong className="me-auto">Info</strong>
-                            </Toast.Header>
-                            <Toast.Body className="text-white">Por favor llene los campos obligatorios <span className="text-danger">*</span>.</Toast.Body>
-                        </Toast>
-                    </ToastContainer>
+                    <ToastMessage message={message} alerta={alerta} setAlerta={setAlerta}></ToastMessage>
                     : ''}
             </Modal>
         </>
